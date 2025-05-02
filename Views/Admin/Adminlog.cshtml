@@ -1,0 +1,49 @@
+﻿@model MvcLightphrm_Prject.Models.Admin.Admin
+
+@{
+    ViewData["Title"] = "Add Site";
+}
+
+<div class="container mt-5">
+
+    <div class="card shadow-sm border-0 mx-auto" style="max-width: 640px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="color: red; text-align: center; height: 50px;">
+                @TempData["SuccessMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0" style="text-align:center">Admin Login</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="getLogin" asp-controller="Admin" method="post" novalidate>
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label fw-semibold"></label>
+                    <input asp-for="Email" class="form-control" placeholder="Enter email" value="mike123@gmail.com" />
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label fw-semibold"></label>
+                    <input asp-for="Password" class="form-control" placeholder="Enter Password" type="password" value="mike123" />
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+                
+                <div style="display: flex; justify-content: center;">
+                    <button type="submit" class="btn btn-success"> Login </button>
+                    <a asp-action="Index" asp-controller="Site" class="btn btn-secondary" style="margin-left:15px;">back to Home</a>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

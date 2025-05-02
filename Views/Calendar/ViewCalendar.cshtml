@@ -1,0 +1,90 @@
+﻿@model List<MvcLightphrm_Prject.Models.Calendar.Calendar>
+
+@{
+    ViewData["Title"] = "SitesCalendar List";
+}
+
+<div class="container mt-5">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>@TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary fw-bold mb-0">👤 User Calendar List</h2>
+
+        @* Optional: Uncomment if needed *@
+        @* 
+        <form asp-controller="User" asp-action="User" class="d-flex me-2">
+            <input type="search" name="searchTerm" class="form-control me-2" placeholder="Search user..." />
+            <button type="submit" class="btn btn-warning">Search</button>
+        </form>
+        <a asp-controller="User" asp-action="AddUser" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Add New User
+        </a> 
+        *@
+    </div>
+
+    @if (Model.Any())
+    {
+        <div class="table-responsive shadow-sm rounded">
+            <table class="table table-hover table-bordered align-middle" style="font-style:italic;">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th>#</th>
+                        <th>CalendarUniqueId</th>
+                        <th>Site Name</th>
+                        <th>Year</th>
+                        <th>Product Name</th>
+                        <th>Approval Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        var user = Model[i];
+                        <tr>
+                            <td>@(i + 1)</td>
+                            <td>@user.CalendarUniqueId</td>
+                            <td><strong>@user.SiteName</strong></td>
+                            <td>@user.Year</td>
+                            <td>@user.ProductName</td>
+                            <td>@user.ApprovalDate.ToString("yyyy-MM-dd")</td>
+                            
+                            <td class="text-center">
+                                <form method="post" asp-controller="User" asp-action="Update" asp-route-UserId="@user.UserId" class="d-inline">
+                                    <button type="submit" class="btn btn-outline-primary btn-sm">
+                                        <i class="bi bi-pencil-square"></i> Update
+                                    </button>
+                                </form>
+                                @* Uncomment below for Delete *@
+                                @* 
+                                <form method="post" asp-controller="User" asp-action="Delete" asp-route-UserId="@user.UserId"
+                                      onsubmit="return confirm('Are you sure you want to delete this user?');" class="d-inline">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </button>
+                                </form> 
+                                *@
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning text-center mt-4" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            No sites Products available to show. Please try again later.
+        </div>
+    }
+    <a asp-action="OpenCalendar" style="margin-top: 10px;/* text-align:right; */display: flex;justify-content: flex-end;">
+        <i class="bi bi-plus-circle me-1"></i> back to Calendar
+    </a>
+</div>

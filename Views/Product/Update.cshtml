@@ -1,0 +1,103 @@
+﻿@model MvcLightphrm_Prject.Models.Product.Product
+
+@{
+    ViewData["Title"] = "Update Product";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-sm border-0 mx-auto" style="max-width: 700px;">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0" style="text-align:center">update new product</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="UpdateProduct" asp-controller="Product" method="post" novalidate>
+
+                <input asp-for="ProductId" class="form-control" placeholder="Enter site name" />
+
+                <div class="mb-3">
+                    <label asp-for="ProductName" class="form-label fw-semibold"></label>
+                    <input asp-for="ProductName" class="form-control" placeholder="Enter product name" />
+                    <span asp-validation-for="ProductName" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ProductFullName" class="form-label fw-semibold"></label>
+                    <input asp-for="ProductFullName" class="form-control" placeholder="Enter product full Name" />
+                    <span asp-validation-for="ProductFullName" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ApprovalDate" class="form-label fw-semibold"></label>
+                    <input asp-for="ApprovalDate" class="form-control" placeholder="Enter date of approve product" type="date" />
+                    <span asp-validation-for="ApprovalDate" class="text-danger small"></span>
+                </div>
+
+@*                 <div class="mb-3">
+                    <label class="form-label fw-semibold">Site Name</label>
+                    <select asp-for="SiteName" class="form-control" asp-items="Model.SiteList">
+                        <option value="">-- Select Site --</option>
+                    </select>
+                </div> *@
+
+@*                 <div class="mb-3">
+                    <label asp-for="SiteName" class="form-label fw-semibold"></label>
+                    <select asp-for="SiteName" asp-items="Model.SiteList" class="form-control">
+                        <option value="">-- Select Site --</option>
+                    </select>
+                    <span asp-validation-for="SiteId" class="text-danger small"></span>
+                </div> *@
+
+@*                 <div class="mb-3">
+                    <label asp-for="SiteName" class="form-label fw-semibold"></label>
+                    <select asp-for="SiteName" asp-items="@(new SelectList(ViewBag.sites,"SiteId","SiteName"))" class="form-control">
+                        <option value="">-- Select Site --</option>
+                    </select>
+                    <span asp-validation-for="SiteId" class="text-danger small"></span>
+                </div> *@
+
+@*                 <div class="mb-3">
+                    <label asp-for="SiteName" class="form-label fw-semibold"></label>
+                    <select asp-for="SiteId" asp-items="@(new SelectList(ViewBag.sites, "SiteId", "SiteName", Model.SiteName))" class="form-control">
+                        <option value="@Model.SiteId">@Model.SiteName</option>
+                    </select>
+                    <span asp-validation-for="SiteId" class="text-danger small"></span>
+                </div>
+
+                <div>
+                    <label>Site</label>
+                    <select asp-for="SiteId" asp-items="@(new SelectList(ViewBag.Sites, "SiteId", "SiteName"))"></select>
+                </div> *@
+
+                <div class="mb-3">
+                    <label asp-for="SiteName" class="form-label fw-semibold"></label>
+                    <select asp-for="SiteId" asp-items="@(new SelectList(ViewBag.sites,"SiteId","SiteName"))" class="form-control">
+                        
+                    </select>
+                    <span asp-validation-for="SiteId" class="text-danger small"></span>
+                </div>
+@* 
+                <div class="form-group">
+                    <label asp-for="SiteId" class="form-label fw-semibold"></label>
+                    <select asp-for="SiteId" class="form-control">
+                        <option value="@Model.SiteId">@Model.SiteName</option>
+                    </select>
+                    <span asp-validation-for="SiteId" class="text-danger small"></span>
+                </div> *@
+
+
+
+
+
+                <div class="d-flex mt-3">
+                    <button type="submit" class="btn btn-success"> Update </button>
+                    <a asp-action="Product" asp-controller="Product" class="btn btn-secondary" style="margin-left:15px;">back to product</a>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

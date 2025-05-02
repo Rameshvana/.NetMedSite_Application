@@ -1,0 +1,91 @@
+﻿@model List<MvcLightphrm_Prject.Models.Product.Product>
+
+@{
+    ViewData["Title"] = "Products List";
+}
+
+<div class="container mt-4">
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+
+@*     <a type="button" class="btn btn-danger" asp-controller="Admin" asp-action="LogoutAdmin"
+    onclick="return confirm('are you sure you want to Exit?');" style=" position: fixed;left: 91%;bottom: 94%;"> Lagout</a> *@
+
+    <div class="Search-card" style="display: flex;justify-content: flex-start;align-items: flex-start;align-content: flex-start;">
+
+        <h3 class="text-primary">Products List</h3>
+        <form  asp-action="Product" asp-controller="Product" class="mb-3" style="margin-left:20px;">
+            <div class="input-group">
+                <div class="input-group">
+                    <input type="search" name="searchTerm" class="form-control" placeholder="Search site here"  aria-label="Search" />
+                    <button type="submit" class="btn btn-warning" style="margin-left:0px;">Search</button>
+                </div>
+
+            </div>
+        </form>
+        <a asp-action="AddProduct" class="btn btn-success" style="margin-left:22px;">Add new product </a>
+    </div>
+
+
+    @if (Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-hover table-striped table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>ProductName</th>
+                        <th>ProductFullName</th>
+                        <th>ApprovalDate</th>
+                        <th>SiteName</th>
+     
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in Model)
+                    {
+                        <tr>
+                            <td>@product.ProductId</td>
+                            <td><strong>@product.ProductName</strong></td>
+                            <td>@product.ProductFullName</td>
+                            <td>@product.ApprovalDate.ToString("yyyy-MM-dd")</td>
+                            <td><span @* class="badge bg-info text-dark" *@>@product.SiteName</span></td>
+                           @*  <td>@site.SiteType</td> *@
+                            <td class="text-center">
+                                <div class="btn-group" role="group">
+                                    <form method="post" asp-controller="Product" asp-action="Update" asp-route-productId="@product.ProductId" class="me-1">
+                                        <button type="submit" class="btn btn-outline-primary btn-sm">Update</button>
+                                    </form>
+                                    @*                                     <form method="post" asp-controller="Site" asp-action="Delete" asp-route-id="@site.SiteId" onsubmit="return confirm('Are you sure you want to delete this site?');">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                                    </form> *@
+                                    <form method="post" asp-controller="Product" asp-action="Delete" asp-route-productId="@product.ProductId" onsubmit="return confirm('Are you sure you want to delete this product?');">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">
+                                            <i class="bi bi-trash"></i> Delete
+                                        </button>
+                                    </form>
+
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning text-center" role="alert">
+            No producs available to Show. Please try again later..
+        </div>
+    }
+
+</div>

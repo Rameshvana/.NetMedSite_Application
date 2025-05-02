@@ -1,0 +1,69 @@
+﻿@model List<MvcLightphrm_Prject.Models.Calendar.Calendar>
+
+@{
+    ViewData["Title"] = "SitesCalendar List";
+}
+
+<div class="container mt-5">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>@TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary fw-bold mb-0">📅 Sites Calendar</h2>
+        <a asp-action="Create" class="btn btn-success shadow-sm">
+            <i class="bi bi-plus-circle me-1"></i> Add New Calendar
+        </a>
+    </div>
+
+    @if (Model.Any())
+    {
+        <div class="table-responsive shadow-sm rounded">
+            <table class="table table-hover table-bordered align-middle" style="font-style:italic;">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th>#</th>
+                        <th>Calendar UniqueId</th>
+                        <th>Site Name</th>
+                        <th>Year</th>
+                        <th>Report date</th>
+                        <th>User Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        var item = Model[i];
+                        <tr>
+                            <td>@(i+1)</td>
+                            <td>@item.CalendarUniqueId</td>
+                            <td><strong>@item.SiteName</strong></td>
+                            <td>@item.Year</td>
+                            <td>@item.ReportDate.ToString("yyyy-MM-dd")</td>
+                            <td>@item.UserName</td>
+                            <td class="text-center">
+                                <form method="post" asp-controller="Calendar" asp-action="GetViewCalendar" asp-route-id="@item.CalendarUniqueId" class="d-inline">
+                                    <button type="submit" class="btn btn-outline-primary btn-sm">
+                                        <i class="bi bi-eye"></i> View
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning text-center mt-4" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            No calendars available. Please try again later.
+        </div>
+    }
+</div>

@@ -1,0 +1,117 @@
+﻿@model MvcLightphrm_Prject.Models.User.User
+
+@{
+    ViewData["Title"] = "update User";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-sm border-0 mx-auto" style="max-width: 700px;">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0" style="text-align:center">update user</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="UpdateUser" asp-controller="User" method="post" novalidate>
+
+                <input asp-for="UserId" class="form-control" />
+                <div class="mb-3">
+                    <label asp-for="UserName" class="form-label fw-semibold"></label>
+                    <input asp-for="UserName" class="form-control" placeholder="Enter user name" />
+                    <span asp-validation-for="UserName" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="UserFullName" class="form-label fw-semibold"></label>
+                    <input asp-for="UserFullName" class="form-control" placeholder="Enter user full Name" />
+                    <span asp-validation-for="UserFullName" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label fw-semibold"></label>
+                    <input asp-for="Description" class="form-control" placeholder="Enter description" />
+                    <span asp-validation-for="Description" class="text-danger small"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label fw-semibold"></label>
+                    <input asp-for="Email" class="form-control" placeholder="Enter email" type="email"  />
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label fw-semibold"></label>
+                    <input asp-for="Password" class="form-control" placeholder="Enter password" type="text" value="@Model.Password" />
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+
+
+
+                <div class="mb-3">
+                    <label asp-for="SiteName" class="form-label fw-semibold"></label>
+                    <select asp-for="SiteId" asp-items="@(new SelectList(ViewBag.sites,"SiteId","SiteName"))" class="form-control" id="SiteId">
+                    </select>
+                    <span asp-validation-for="SiteId" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ProductName" class="form-label fw-semibold"></label>
+                    <select asp-for="ProductId" asp-items="@(new SelectList(ViewBag.products,"ProductId","ProductName"))" class="form-control">
+                    </select>
+                    <span asp-validation-for="ProductId" class="text-danger small"></span>
+                </div>
+@*                 <div class="mb-3">
+                    <label asp-for="ProductId" class="form-label fw-semibold"></label>
+                    <select asp-for="ProductId" class="form-control" id="ProductId">
+                        <option value="">-- Select product --</option>
+                    </select>
+                    <span asp-validation-for="ProductId" class="text-danger small"></span>
+                </div> *@
+
+
+                <div class="d-flex mt-3">
+                    <button type="submit" class="btn btn-success">Save</button>
+                    <a asp-action="User" asp-controller="User" class="btn btn-secondary" style="margin-left:15px;">back to user</a>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#SiteId').change(function () {
+                var siteId = $(this).val();
+
+                var productDropdown = $('#ProductId');
+                productDropdown.empty().append('<option value="">-- Select product --</option>');
+
+                if (siteId) {
+                    $.ajax({
+                        url: '@Url.Action("GetProductsBySiteId", "User")',
+                        type: 'POST',
+                        data: { siteId: siteId },
+                        headers: {
+                            'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                        },
+                        success: function (data) {
+                            $.each(data, function (index, product) {
+                                productDropdown.append(
+                                    $('<option>', {
+                                        value: product.productId,
+                                        text: product.productName
+                                    })
+                                );
+                            });
+                        },
+                        error: function () {
+                            alert('Error retrieving products.');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+} 

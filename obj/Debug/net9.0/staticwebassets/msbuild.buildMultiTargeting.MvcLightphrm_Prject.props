@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\MvcLightphrm_Prject.props" />
+</Project>

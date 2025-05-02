@@ -1,0 +1,73 @@
+﻿@model MvcLightphrm_Prject.Models.Calendar.Calendar
+
+@{
+    ViewData["Title"] = "Add Calendar";
+}
+
+<div class="container mt-5">
+   
+@*     <p class="text-danger small">@TempData["ErrorMessage"]</p>
+    <span  class="text-danger small"></span> *@
+    
+    <div class="card shadow-sm border-0 mx-auto" style="max-width: 700px;">
+        <div>
+            @* <a asp-action="ViewCalendar" asp-controller="Calendar" class="btn btn-secondary" style="margin-left:15px;">Back to ViewCalendar</a>
+            <a asp-action="OpenCalendar" asp-controller="Calendar" class="btn btn-danger" style="margin-left:15px;">Back to OpenCalendar</a> *@
+
+        </div>
+
+        <strong  style="
+    color: red;
+    margin: 5px;
+    text-align: center;
+    font-weight: 450;
+">
+                @TempData["ErrorMessage"]
+            </strong>
+        
+        <div class="card-header bg-primary text-white">
+
+            <h4 class="mb-0" style="text-align:center">Add new Calendar</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="SaveCalendar" asp-controller="Calendar" method="post" novalidate>
+                <div class="mb-3">
+                    <label asp-for="Year" class="form-label fw-semibold"></label>
+                    <select asp-for="Year" class="form-control">
+                        <option value="">-- Select the Year --</option>
+                        @for (int year = DateTime.Now.Year; year >= 2020; year--)
+                        {
+                            <option value="@($"{year}")">@year</option>
+                        }
+                    </select>
+                    <span asp-validation-for="SiteId" class="text-danger small"></span>
+                </div>
+
+
+
+
+
+                <div class="mb-3">
+                    <label asp-for="SiteName" class="form-label fw-semibold">SiteName</label>
+                    <select asp-for="SiteName" asp-items="@(new SelectList(ViewBag.sites, "SiteName", "SiteName"))" class="form-control">
+                        <option value="">-- Select Site --</option>
+                    </select>
+                    <span asp-validation-for="SiteId" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="UserName" class="form-label fw-semibold">UserName</label>
+                    <select asp-for="UserName" asp-items="@(new SelectList(ViewBag.users, "UserName", "UserName"))" class="form-control">
+                        <option value="">-- Select User --</option>
+                    </select>
+                    <span asp-validation-for="UserId" class="text-danger small"></span>
+                </div>
+
+                <div class="d-flex justify-content-center mt-3">
+                    <button type="submit" class="btn btn-success"> Save </button>
+                    <a asp-action="OpenCalendar" asp-controller="Calendar" class="btn btn-secondary" style="margin-left:15px;">Back to Calendar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
