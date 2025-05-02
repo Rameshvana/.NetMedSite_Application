@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MvcLightphrm_Prject")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+18bbce64449936105e4189bfe5a4f2a9646f0d4b")]
 [assembly: System.Reflection.AssemblyProductAttribute("MvcLightphrm_Prject")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MvcLightphrm_Prject")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
